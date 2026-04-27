@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    background: linear-gradient(180deg, #050816, #070b1f);
+    color: #9bbdf4;
+    overflow-x: hidden;
+}
+
+/* glow */
+body::before {
+    content: "";
+    position: fixed;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(173,216,255,0.14), transparent 70%);
+    top: -160px;
+    left: -160px;
+    z-index: -1;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 16px;
+    position: sticky;
+    top: 0;
+    background: rgba(5,8,22,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(173,216,255,0.08);
+}
+
+nav a {
+    color: #cfe8ff;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #fff;
+}
+
+header {
+    text-align: center;
+    padding: 110px 20px 60px;
+}
+
+header h1 {
+    font-size: 3.2rem;
+    background: linear-gradient(90deg, #d8f3ff, #bcdcff, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.typing {
+    margin-top: 14px;
+    color: #d6ecff;
+    min-height: 24px;
+}
+
+.container {
+    max-width: 950px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(173,216,255,0.12);
+    backdrop-filter: blur(12px);
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(173,216,255,0.22);
+}
+
+h2 {
+    color: #d8f3ff;
+    margin-bottom: 12px;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #a8d8ff, #e6f6ff);
+    color: #0b1020;
+    text-decoration: none;
+}
+
+/* ================= PROJECT FLIP CARDS ================= */
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.flip-card {
+    perspective: 1200px;
+}
+
+.flip-inner {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    padding: 18px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* FRONT */
+.flip-front {
+    color: white;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.flip-front::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    border-radius: 14px;
+}
+
+.flip-front h3,
+.flip-front p {
+    position: relative;
+    z-index: 2;
+}
+
+/* BACK */
+.flip-back {
+    background: rgba(10, 14, 35, 0.92);
+    color: #d8f3ff;
+    transform: rotateY(180deg);
+    border: 1px solid rgba(173,216,255,0.15);
+}
+
+.flip-back .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* backgrounds */
+.flip-front.police {
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/011/974/461/small/police-station-department-building-illustration-with-policeman-and-car-on-flat-cartoon-style-background-vector.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
+}
+
+.flip-front.research {
+    background-image: url("https://i.pinimg.com/1200x/6e/c9/12/6ec91200d7bab6398d3eeaba6f41107e.jpg");
+}
+
+.flip-front.irrigation {
+    background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6");
+}
+
+/* 🦋 butterfly */
+#butterfly {
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle, #d8f3ff, #8ecbff);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.9;
+}
+
+#trailCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#interests">Interests</a>
+    <a href="#projects">Projects</a>
+    <a href="#goals">Goals</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<header>
+    <h1>Stacey Deffa Namubiru</h1>
+    <div class="typing" id="typing"></div>
+</header>
+
+<div class="container">
+
+<section class="card" id="about">
+    <h2>About</h2>
+    <p>I am a student interested in technology and building real-world projects.</p>
+</section>
+
+<section class="card" id="interests">
+    <h2>Interests</h2>
+    <ul>
+        <li>Programming</li>
+        <li>Embedded Systems</li>
+        <li>Gaming</li>
+        <li>Fitness</li>
+    </ul>
+</section>
+
+<!-- ✅ UPDATED PROJECTS ONLY -->
+<section class="card" id="projects">
+    <h2>Projects</h2>
+
+    <div class="projects">
+
+        <div class="flip-card">
+            <div class="flip-inner">
+
+                <div class="flip-front police">
+                    <h3>P-Alert</h3>
+                    <p>Hover / Tap</p>
+                </div>
+
+                <div class="flip-back">
+                    <div class="icon">🚓</div>
+                    <p>A virtual police station app that connects civillians to the nearest police officials and station.</p>
+                    <p>Programming Lanuguages and Technologies used: React, React-native, JS, Firebase, Figma, Git</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-inner">
+
+                <div class="flip-front research">
+                    <h3>Website: Non-Profit Organisation</h3>
+                    <p>Hover / Tap</p>
+                </div>
+
+                <div class="flip-back">
+                    <div class="icon">🔐</div>
+                    <p>Designed a website for Light Life Community group.</p>
+                    <p>Check my github for more information!</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-inner">
+
+                <div class="flip-front irrigation">
+                    <h3>Smart-Irrigation System</h3>
+                    <p>Hover / Tap</p>
+                </div>
+
+                <div class="flip-back">
+                    <div class="icon">🌱</div>
+                    <p>Physics-based irrigation optimization using mathematical modeling.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="card" id="goals">
+    <h2>Goals</h2>
+    <p>Keep doing the hard things until the easy ones become boring.</p>
+</section>
+
+<section class="card" id="contact">
+    <h2>Contact</h2>
+    <p>Email: namubirus@xavier.edu</p>
+    <a class="button" href="https://github.com/dashboard">GitHub</a>
+</section>
+
+</div>
+
+<footer>
+    <p>© 2026 Stacey Deffa Namubiru</p>
+</footer>
+
+<!-- 🦋 EFFECT ELEMENTS -->
+<div id="butterfly"></div>
+<canvas id="trailCanvas"></canvas>
+
+<script>
+/* typing */
+const text = ["Aspiring Developer", "Tech Focused", "Future Engineer"];
+let i = 0, j = 0, isDeleting = false;
+
+function type() {
+    const el = document.getElementById("typing");
+    el.textContent = text[i].substring(0, j);
+
+    if (!isDeleting) {
+        j++;
+        if (j > text[i].length) {
+            isDeleting = true;
+            setTimeout(type, 900);
+            return;
+        }
+    } else {
+        j--;
+        if (j < 0) {
+            isDeleting = false;
+            i = (i + 1) % text.length;
+            j = 0;
+        }
+    }
+
+    setTimeout(type, isDeleting ? 55 : 85);
+}
+type();
+
+/* butterfly */
+const butterfly = document.getElementById("butterfly");
+const canvas = document.getElementById("trailCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let t = 0;
+let prevX = 0;
+let prevY = 0;
+let segments = [];
+
+function drawBrokenLine(x1, y1, x2, y2) {
+    const now = Date.now();
+
+    for (let i = 0; i < 8; i++) {
+        if (Math.random() > 0.35) {
+            segments.push({
+                sx: x1 + (x2 - x1) * (i / 8),
+                sy: y1 + (y2 - y1) * (i / 8),
+                ex: x1 + (x2 - x1) * ((i + 1) / 8),
+                ey: y1 + (y2 - y1) * ((i + 1) / 8),
+                born: now
+            });
+        }
+    }
+}
+
+function renderSegments() {
+    const now = Date.now();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    segments = segments.filter(seg => {
+        const age = now - seg.born;
+        if (age > 1400) return false;
+
+        const alpha = 1 - age / 1400;
+        ctx.strokeStyle = `rgba(173,216,255,${alpha * 0.35})`;
+
+        ctx.beginPath();
+        ctx.moveTo(seg.sx, seg.sy);
+        ctx.lineTo(seg.ex, seg.ey);
+        ctx.stroke();
+
+        return true;
+    });
+}
+
+function animate() {
+    const x = window.innerWidth/2 + Math.sin(t*0.01)*220;
+    const y = window.innerHeight/2 + Math.cos(t*0.012)*140;
+
+    butterfly.style.left = x + "px";
+    butterfly.style.top = y + "px";
+
+    drawBrokenLine(prevX, prevY, x, y);
+    prevX = x;
+    prevY = y;
+
+    renderSegments();
+
+    t++;
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
